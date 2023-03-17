@@ -45,9 +45,10 @@ function rand(num) {
 }
 async function bubbleSort(arr) {
     let sorted = false;
+    let count = 0;
     while(!sorted) {
         sorted = true;
-        for(let i = 1; i < arr.length; ++i) {
+        for(let i = 1; i < arr.length - count; ++i) {
             activate(i, i+1, true);
             await wait(speed);
             if(arr[i-1] > arr[i]) {
@@ -58,6 +59,7 @@ async function bubbleSort(arr) {
             }
             activate(i, i+1, false);
         }
+        count++;
     }
     return arr;
 }
