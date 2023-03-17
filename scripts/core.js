@@ -3,7 +3,7 @@ const N = 50;
 const arr = initSticks(N);
 const speed = 100;
 
-bubbleSort(arr);
+await quickSort(0, arr.length - 1);
 
 function initSticks(n) {
     let arr = initArray(n);
@@ -35,9 +35,9 @@ function shuffle(arr) {
     return arr;
 }
 
-function updateStick(sn, n) {
+function updateStick(sn) {
     const stick = document.querySelector(`.stick:nth-child(${sn})`);
-    stick.style.height = arr[sn-1] * (sticksContainer.clientHeight / n) + "px";
+    stick.style.height = arr[sn-1] * (sticksContainer.clientHeight / N) + "px";
 }
 
 function rand(num) {
@@ -50,19 +50,49 @@ async function bubbleSort(arr) {
         sorted = true;
         for(let i = 1; i < arr.length - count; ++i) {
             activate(i, i+1, true);
-            await wait(speed);
             if(arr[i-1] > arr[i]) {
                 sorted = false;
                 [arr[i-1], arr[i]] = [arr[i], arr[i-1]];
-                updateStick(i, N);
-                updateStick(i+1, N);   
+                updateStick(i);
+                updateStick(i+1);   
             }
+            await wait(speed);
             activate(i, i+1, false);
         }
         count++;
     }
     return arr;
 }
+
+async function quickSort(left, right) {
+    if(left >= right) return;
+    
+    const pivot = right;
+    const pivotStick = document.querySelector(`.stick:nth-child(${pivot + 1})`);
+    pivotStick.classList.add("green");
+    
+    let i = left, j = left;
+    while(i < pivot) {
+        let a = i + 1, b = j + 1;
+        activate(a, b, true);
+        await wait(speed);
+        if(arr[i] < arr[pivot]) {
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+            updateStick(a);
+            updateStick(b);
+            j++;
+        }
+        activate(a, b, false);
+        i++;
+    }
+    [arr[j], arr[pivot]] = [arr[pivot], arr[j]];
+    updateStick(j+1);
+    updateStick(pivot+1);
+
+    pivotStick.classList.remove("green");
+    await quickSort(left, j - 1);
+    await quickSort(j + 1, right);
+}   
 
 function activate(a, b, isActive) {
     const stick1 = document.querySelector(`.stick:nth-child(${a})`);

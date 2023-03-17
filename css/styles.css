@@ -23,3 +23,7 @@ body {
 .active {
     background-color: blue;
 }
+
+.green {
+    background-color: green;
+}
