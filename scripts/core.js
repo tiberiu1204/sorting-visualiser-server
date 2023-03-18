@@ -1,9 +1,11 @@
 const sticksContainer = document.querySelector(".sticks-container");
 const N = 50;
-const arr = initSticks(N);
+let arr = initSticks(N);
 const speed = 100;
 
-await quickSort(0, arr.length - 1);
+//quickSort(0, arr.length - 1);
+mergeSort(0, arr.length - 1);
+console.log(arr);
 
 function initSticks(n) {
     let arr = initArray(n);
@@ -94,6 +96,55 @@ async function quickSort(left, right) {
     await quickSort(j + 1, right);
 }   
 
+async function mergeSort(left, right) {
+    if(left == right) {
+        return new Promise(resolve => {resolve([arr[left]])});
+    }
+
+    const middle = Math.floor((left + right) / 2);
+    
+    let arr1, arr2;
+    await mergeSort(left, middle).then(val => {arr1 = val});
+    await mergeSort(middle + 1, right).then(val => arr2 = val);
+    const res = [];
+
+    let i = 0, j = 0;
+    while(i < arr1.length && j < arr2.length) {
+        let a = i + 1 + left, b = j + 2 + middle;
+        activate(a, b, true);
+        await wait(speed);
+        if(arr1[i] < arr2[j]) {
+            res.push(arr1[i++]);
+        } else {
+            res.push(arr2[j++]);
+        }
+        activate(a, b, false);
+    }
+
+    while(arr1.length > i) {
+        activateSingle(i+1 + left, true);
+        await wait(speed);
+        res.push(arr1[i++]);
+        activateSingle(i + left, false);
+    }
+    while(arr2.length > j) {
+        activateSingle(j+1 + middle, false);
+        await wait(speed);
+        res.push(arr2[j++]);
+        activateSingle(j + middle, false);
+    }
+
+    j = 0;
+    for(i = left; i <= right; ++i) {
+        arr[i] = res[j++];
+        updateStick(i+1);
+        activateSingle(i+1, true);
+        await wait(speed);
+        activateSingle(i+1, false);
+    }
+    return new Promise(resolve => {resolve(res)});
+}
+
 function activate(a, b, isActive) {
     const stick1 = document.querySelector(`.stick:nth-child(${a})`);
     const stick2 = document.querySelector(`.stick:nth-child(${b})`);
@@ -103,6 +154,15 @@ function activate(a, b, isActive) {
     } else {
         stick1.classList.remove("active");
         stick2.classList.remove("active");
+    }
+}
+
+function activateSingle(a, isActive) {
+    const stick = document.querySelector(`.stick:nth-child(${a})`);
+    if(isActive) {
+        stick.classList.add("active");
+    } else {
+        stick.classList.remove("active");
     }
 }
 
