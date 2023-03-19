@@ -1,7 +1,7 @@
 const sticksContainer = document.querySelector(".sticks-container");
-const N = 100;
+const N = 50;
 let arr = initSticks(N);
-const speed = 10;
+const speed = 100;
 
 bubbleSort(arr);
 
