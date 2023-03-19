@@ -58,11 +58,11 @@ body {
 }
 
 .active {
-    background-color: #69B578;
+    background-color: #FB504A;
 }
 
 .green {
-    background-color: #DB504A;
+    background-color: #69B578;
 }
 
 @media (max-width: 684px) {

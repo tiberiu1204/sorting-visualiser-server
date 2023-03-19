@@ -1,9 +1,9 @@
 const sticksContainer = document.querySelector(".sticks-container");
-const N = 50;
+const N = 100;
 let arr = initSticks(N);
-const speed = 100;
+const speed = 0;
 
-bubbleSort(arr);
+quickSort(0, arr.length-1);
 
 function initSticks(n) {
     let arr = initArray(n);
@@ -137,8 +137,8 @@ async function mergeSort(left, right) {
     for(i = left; i <= right; ++i) {
         arr[i] = res[j++];
         activateSingle(i+1, true);
-        await wait(speed);
         updateStick(i+1);
+        await wait(speed);
         activateSingle(i+1, false);
     }
     return new Promise(resolve => {resolve(res)});
