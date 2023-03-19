@@ -1,20 +1,18 @@
 const sticksContainer = document.querySelector(".sticks-container");
-const N = 50;
+const N = 100;
 let arr = initSticks(N);
-const speed = 100;
+const speed = 10;
 
-//quickSort(0, arr.length - 1);
-mergeSort(0, arr.length - 1);
-console.log(arr);
+bubbleSort(arr);
 
 function initSticks(n) {
     let arr = initArray(n);
-    const stickWidth = sticksContainer.clientWidth / n + "px";
+    const stickWidth = (100 / n) + "%";
     const height = sticksContainer.clientHeight;
     for(let i = 0; i < arr.length; ++i) {
         const stick = document.createElement("div");
         stick.style.width = stickWidth;
-        stick.style.height = height * (arr[i] / n) + "px";
+        stick.style.height = 100 * (arr[i] / n) + "%";
         stick.classList.add("stick");
         sticksContainer.appendChild(stick);
     }
@@ -39,12 +37,13 @@ function shuffle(arr) {
 
 function updateStick(sn) {
     const stick = document.querySelector(`.stick:nth-child(${sn})`);
-    stick.style.height = arr[sn-1] * (sticksContainer.clientHeight / N) + "px";
+    stick.style.height = 100 * (arr[sn-1] / N) + "%";
 }
 
 function rand(num) {
     return Math.floor(Math.random() * num);
 }
+
 async function bubbleSort(arr) {
     let sorted = false;
     let count = 0;
@@ -137,9 +136,9 @@ async function mergeSort(left, right) {
     j = 0;
     for(i = left; i <= right; ++i) {
         arr[i] = res[j++];
-        updateStick(i+1);
         activateSingle(i+1, true);
         await wait(speed);
+        updateStick(i+1);
         activateSingle(i+1, false);
     }
     return new Promise(resolve => {resolve(res)});
