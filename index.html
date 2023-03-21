@@ -10,8 +10,19 @@
 <body>
     <div class="header-container"></div>
     <div class="main-container">
-        <div class="viz-container">
-            <div class="sticks-container"></div>
+        <div class="app-container">
+            <div class="viz-container">
+                <div class="sticks-container"></div>
+            </div>
+            <div class="viz-options-container">
+                <label for="bubble-sort" class="algorithm-button">Bubble Sort</label>
+                <input type="radio" name="algorithm" class="algorithm" id="bubble-sort" value="1" checked>
+                <label for="quick-sort" class="algorithm-button">Quick Sort</label>
+                <input type="radio" name="algorithm" class="algorithm" id="quick-sort" value="2">
+                <label for="merge-sort" class="algorithm-button">Merge Sort</label>
+                <input type="radio" name="algorithm" class="algorithm" id="merge-sort" value="3">
+                <button type="button" id="sort">Sort!</button>
+            </div>
         </div>
     </div>
     <div class="footer-container"></div>

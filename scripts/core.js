@@ -1,9 +1,33 @@
 const sticksContainer = document.querySelector(".sticks-container");
+const sortBtn = document.querySelector("#sort");
+
+let selectedAlgorithm;
 const N = 100;
 let arr = initSticks(N);
 const speed = 0;
 
-quickSort(0, arr.length-1);
+setup();
+
+function setup() {
+    const algorithmInputs = document.querySelectorAll(".algorithm");
+
+    algorithmInputs.forEach(input => {
+        if(input.checked) {
+            selectedAlgorithm = input.value;
+            console.log(selectedAlgorithm);
+        }
+        input.addEventListener("change", () => {
+            if(input.checked) {
+                selectedAlgorithm = input.value;
+                console.log(selectedAlgorithm);
+            }
+        });
+    });
+    
+    sortBtn.addEventListener("click", () => {
+        beginSort(selectedAlgorithm);
+    });
+}
 
 function initSticks(n) {
     let arr = initArray(n);
@@ -167,4 +191,17 @@ function activateSingle(a, isActive) {
 
 function wait(ms) {
     return new Promise(res => setTimeout(res, ms));
+}
+
+function beginSort(sortId) {
+
+    if(sortId == 1) {
+        bubbleSort(arr);
+    }
+    if(sortId == 2) {
+        quickSort(0, arr.length - 1);
+    }
+    if(sortId == 3) {
+        mergeSort(0, arr.length - 1);
+    }
 }
