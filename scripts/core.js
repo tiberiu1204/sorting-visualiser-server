@@ -1,38 +1,50 @@
 const sticksContainer = document.querySelector(".sticks-container");
 const sortBtn = document.querySelector("#sort");
+const shuffleBtn = document.querySelector("#shuffle");
 
 let selectedAlgorithm;
-const N = 100;
+let N = 100;
 let arr = initSticks(N);
 const speed = 0;
+let isSorting = false;
 
 setup();
 
 function setup() {
     const algorithmInputs = document.querySelectorAll(".algorithm");
+    
     algorithmInputs.forEach(input => {
-        if(input.checked) {
-            selectedAlgorithm = input.value;
-            console.log(selectedAlgorithm);
-        }
-        input.addEventListener("change", () => {
-            const id = input.getAttribute("id");
-            const label = document.querySelector(`.algorithm-button[for="${id}"]`);
-            if(input.checked) {
-                selectedAlgorithm = input.value;
-                console.log(selectedAlgorithm);
-                label.style.color = "#130103";
-                label.style.backgroundColor = "#FFD29D";
-            } else {
-                label.style.color = "#FFD29D";
-                label.style.backgroundColor = "#130103";
-            }
+        checkIfSelected(input);
+        input.addEventListener("click", () => {
+            algorithmInputs.forEach(element => { checkIfSelected(element); });
         });
     });
-    
+
     sortBtn.addEventListener("click", () => {
         beginSort(selectedAlgorithm);
     });
+
+    shuffleBtn.addEventListener("click", () => {
+        if(isSorting) return;
+        arr = shuffle(arr);
+        for(let i = 0; i < arr.length; ++i) {
+            updateStick(i+1);
+        }
+    });
+
+    function checkIfSelected(element) {
+        if(isSorting) return;
+        const id = element.getAttribute("id");
+        const label = document.querySelector(`.algorithm-button[for="${id}"]`);
+        if(element.checked) {
+            selectedAlgorithm = element.value;
+            label.style.color = "#130103";
+            label.style.backgroundColor = "#FDE3C6";
+        } else {
+            label.style.color = "#FDE3C6";
+            label.style.backgroundColor = "#130103";
+        }
+    }
 }
 
 function initSticks(n) {
@@ -201,13 +213,15 @@ function wait(ms) {
 
 function beginSort(sortId) {
 
+    if(isSorting) return;
+    isSorting = true;
     if(sortId == 1) {
-        bubbleSort(arr);
+        bubbleSort(arr).then(() => isSorting = false);
     }
     if(sortId == 2) {
-        quickSort(0, arr.length - 1);
+        quickSort(0, arr.length - 1).then(() => isSorting = false);
     }
     if(sortId == 3) {
-        mergeSort(0, arr.length - 1);
+        mergeSort(0, arr.length - 1).then(() => isSorting = false);
     }
 }

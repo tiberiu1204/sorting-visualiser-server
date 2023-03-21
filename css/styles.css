@@ -26,10 +26,11 @@ body {
 }
 
 .main-container {
-    height: calc(100vh - var(--header-height));
+    min-height: calc(100vh - var(--header-height));
     width: 100%;
     margin-top: var(--header-height);
     display: flex;
+    flex-direction: column;
     background-color: #FFD29D;
     justify-content: center;
     align-items: center;
@@ -37,7 +38,8 @@ body {
 
 .app-container {
     width: 70%;
-    height: 100%;
+    height: 90vh;
+    min-height: 460px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,6 +88,8 @@ body {
 }
 
 .algorithm-button {
+    min-width: 50px;
+    max-width: 200px;
     background-color: #130103;
     color: #FDE3C6;
     display: flex; 
@@ -97,8 +101,7 @@ body {
 }
 
 .algorithm-button:hover {
-    background-color: #FFD29D;
-    color: #130103;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, .20);
 }
 
 .algorithm {
@@ -106,9 +109,15 @@ body {
 }
 
 @media (max-width: 684px) {
+    .app-container {
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+    }
     .viz-container {
         height: 100%;
-        width: 100%;
+        border-radius: 0;
+    }
+    .viz-options-container {
         border-radius: 0;
     }
 }
