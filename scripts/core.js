@@ -10,16 +10,22 @@ setup();
 
 function setup() {
     const algorithmInputs = document.querySelectorAll(".algorithm");
-
     algorithmInputs.forEach(input => {
         if(input.checked) {
             selectedAlgorithm = input.value;
             console.log(selectedAlgorithm);
         }
         input.addEventListener("change", () => {
+            const id = input.getAttribute("id");
+            const label = document.querySelector(`.algorithm-button[for="${id}"]`);
             if(input.checked) {
                 selectedAlgorithm = input.value;
                 console.log(selectedAlgorithm);
+                label.style.color = "#130103";
+                label.style.backgroundColor = "#FFD29D";
+            } else {
+                label.style.color = "#FFD29D";
+                label.style.backgroundColor = "#130103";
             }
         });
     });

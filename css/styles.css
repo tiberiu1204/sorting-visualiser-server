@@ -77,16 +77,19 @@ body {
 
 .viz-options-container {
     width: 100%;
-    height: 80px;
-    background-color: lightblue;
+    height: 10%;
+    background-color: #69B578;
     display: flex;
     gap: 20px;
+    border-radius: 30px;
+    padding: 10px;
 }
 
 .algorithm-button {
-    background-color: red;
-    display: flex;
-    align-items: center;
+    background-color: #130103;
+    color: #FDE3C6;
+    display: flex; 
+    align-items: center; 
     justify-content: center;
     padding: 0 20px 0 20px;
     border-radius: 30px;
@@ -94,7 +97,8 @@ body {
 }
 
 .algorithm-button:hover {
-    background-color: lightcoral;
+    background-color: #FFD29D;
+    color: #130103;
 }
 
 .algorithm {
