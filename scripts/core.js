@@ -1,18 +1,23 @@
 const sticksContainer = document.querySelector(".sticks-container");
 const sortBtn = document.querySelector("#sort");
 const shuffleBtn = document.querySelector("#shuffle");
+const stopBtn = document.querySelector("#stop");
+const algorithmInputs = document.querySelectorAll(".algorithm");
+const sizeSlider = document.querySelector("#size");
+const speedSlider = document.querySelector("#speed");
 
 let selectedAlgorithm;
-let N = 100;
+let N = sizeSlider.value * 20;
 let arr = initSticks(N);
-const speed = 0;
+let speed = 0;
 let isSorting = false;
 
 setup();
 
 function setup() {
-    const algorithmInputs = document.querySelectorAll(".algorithm");
-    
+
+    getSpeed();
+
     algorithmInputs.forEach(input => {
         checkIfSelected(input);
         input.addEventListener("click", () => {
@@ -31,6 +36,14 @@ function setup() {
             updateStick(i+1);
         }
     });
+
+    sizeSlider.addEventListener("input", () => {
+        N = sizeSlider.value * 20;
+        clearSticks();
+        arr = initSticks(N);
+    });
+
+    speedSlider.addEventListener("input", getSpeed);
 
     function checkIfSelected(element) {
         if(isSorting) return;
@@ -59,6 +72,12 @@ function initSticks(n) {
         sticksContainer.appendChild(stick);
     }
     return arr;
+}
+
+function clearSticks() {
+    while(sticksContainer.firstChild) {
+        sticksContainer.removeChild(sticksContainer.lastChild);
+    }
 }
 
 function initArray(n) {
@@ -213,15 +232,36 @@ function wait(ms) {
 
 function beginSort(sortId) {
 
+    sizeSlider.setAttribute("disabled", "");
+
     if(isSorting) return;
     isSorting = true;
     if(sortId == 1) {
-        bubbleSort(arr).then(() => isSorting = false);
+        bubbleSort(arr).then(resolve);
     }
     if(sortId == 2) {
-        quickSort(0, arr.length - 1).then(() => isSorting = false);
+        quickSort(0, arr.length - 1).then(resolve);
     }
     if(sortId == 3) {
-        mergeSort(0, arr.length - 1).then(() => isSorting = false);
+        mergeSort(0, arr.length - 1).then(resolve);
+    }
+
+    function resolve() {
+        isSorting = false;
+        sizeSlider.removeAttribute("disabled");
+    }
+}
+
+function getSpeed() {
+    switch(speedSlider.value) {
+        case "3":
+            speed = 0;
+            break;
+        case "2":
+            speed = 100;
+            break;
+        case "1":
+            speed = 1000;
+            break;
     }
 }
