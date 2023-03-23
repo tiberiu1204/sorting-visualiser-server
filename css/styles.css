@@ -44,6 +44,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 20px;
 }
 
 .viz-container {
@@ -94,12 +95,14 @@ body {
     width: 300px;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.algorithm-button {
+.algorithm-button, button {
     height: 100%;
+    width: 100%;
     background-color: #130103;
     color: #FDE3C6;
     display: flex; 
@@ -107,8 +110,18 @@ body {
     justify-content: center;
     padding: 0 20px 0 20px;
     border-radius: 30px;
-    font-size: .8rem;
+    font-size: 1.4rem;
+    border: none;
     transition: all 400ms;
+}
+
+.button:hover {
+    background-color: #550C18;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, .20);
+}
+
+.button:disabled:hover {
+    background-color: #130103;
 }
 
 .algorithm-button:hover {
@@ -133,8 +146,8 @@ body {
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, .20);
 }
 
-.slider:disabled {
-    opacity: .5;
+*:disabled {
+    opacity: .5 !important;
 }
 
 .slider::-moz-range-thumb {
@@ -152,7 +165,13 @@ body {
     border-radius: 999px;
     background: #130103; 
     cursor: pointer;
-  }
+}
+
+.description-label {
+    font-size: 1.4rem;
+    color: #FDE3C6;
+    margin-bottom: .2em;
+}
 
 @media (max-width: 684px) {
     .app-container {

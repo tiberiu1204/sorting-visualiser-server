@@ -3,6 +3,7 @@ const sortBtn = document.querySelector("#sort");
 const shuffleBtn = document.querySelector("#shuffle");
 const stopBtn = document.querySelector("#stop");
 const algorithmInputs = document.querySelectorAll(".algorithm");
+const algorithmButtons = document.querySelectorAll(".algorithm-button");
 const sizeSlider = document.querySelector("#size");
 const speedSlider = document.querySelector("#speed");
 
@@ -19,12 +20,29 @@ function setup() {
     getSpeed();
     setOptionWidth();
 
+
     algorithmInputs.forEach(input => {
         checkIfSelected(input);
         input.addEventListener("click", () => {
             algorithmInputs.forEach(element => { checkIfSelected(element); });
         });
     });
+
+    for(let i = 0; i < algorithmButtons.length; ++i) {
+        const btn = algorithmButtons[i];
+        btn.addEventListener("mouseover", () => {
+            if(algorithmInputs[i].checked || btn.style.opacity == "0.5") {
+                return;
+            }
+            btn.style.backgroundColor = "#550C18";
+        });
+        btn.addEventListener("mouseout", () => {
+            if(algorithmInputs[i].checked || btn.style.opacity == "0.5") {
+                return;
+            }
+            btn.style.backgroundColor = "#130103";
+        });
+    }
 
     sortBtn.addEventListener("click", () => {
         beginSort(selectedAlgorithm);
@@ -243,7 +261,8 @@ function wait(ms) {
 
 function beginSort(sortId) {
 
-    sizeSlider.setAttribute("disabled", "");
+
+    disableButtons();
 
     if(isSorting) return;
     isSorting = true;
@@ -259,7 +278,21 @@ function beginSort(sortId) {
 
     function resolve() {
         isSorting = false;
+        for(let i = 0; i < algorithmButtons.length; ++i) {
+            algorithmButtons[i].style.opacity = "1";
+        }
         sizeSlider.removeAttribute("disabled");
+        shuffleBtn.removeAttribute("disabled", "");
+        sortBtn.removeAttribute("disabled", "");
+    }
+    
+    function disableButtons() {
+        for(let i = 0; i < algorithmButtons.length; ++i) {
+            algorithmButtons[i].style.opacity = ".5";
+        }
+        sizeSlider.setAttribute("disabled", "");
+        shuffleBtn.setAttribute("disabled", "");
+        sortBtn.setAttribute("disabled", "");
     }
 }
 
