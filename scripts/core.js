@@ -17,6 +17,7 @@ setup();
 function setup() {
 
     getSpeed();
+    setOptionWidth();
 
     algorithmInputs.forEach(input => {
         checkIfSelected(input);
@@ -56,6 +57,16 @@ function setup() {
         } else {
             label.style.color = "#FDE3C6";
             label.style.backgroundColor = "#130103";
+        }
+    }
+
+    function setOptionWidth() {
+        const vizOptionsContainer = document.querySelector(".viz-options-container");
+        const chilren = vizOptionsContainer.children;
+        let childWidth = 100 / vizOptionsContainer.childElementCount + "%";
+        
+        for(let i = 0; i < vizOptionsContainer.childElementCount; ++i) {
+            chilren[i].style.width = childWidth;
         }
     }
 }

@@ -14,6 +14,7 @@ html, body {
 
 body {
     min-height: calc(100vh - var(--header-height));
+    padding-top: var(--header-height);
 }
 
 .header-container {
@@ -28,7 +29,6 @@ body {
 .main-container {
     min-height: calc(100vh - var(--header-height));
     width: 100%;
-    margin-top: var(--header-height);
     display: flex;
     flex-direction: column;
     background-color: #FFD29D;
@@ -38,7 +38,7 @@ body {
 
 .app-container {
     width: 70%;
-    height: 90vh;
+    height: calc(100vh - var(--header-height));
     min-height: 460px;
     display: flex;
     flex-direction: column;
@@ -82,14 +82,24 @@ body {
     height: 10%;
     background-color: #69B578;
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 20px;
     border-radius: 30px;
     padding: 10px;
 }
 
+.option-container {
+    height: 100%;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .algorithm-button {
-    min-width: 50px;
-    max-width: 200px;
+    height: 100%;
     background-color: #130103;
     color: #FDE3C6;
     display: flex; 
@@ -97,7 +107,8 @@ body {
     justify-content: center;
     padding: 0 20px 0 20px;
     border-radius: 30px;
-    font-size: 1.2rem;
+    font-size: .8rem;
+    transition: all 400ms;
 }
 
 .algorithm-button:hover {
@@ -107,6 +118,41 @@ body {
 .algorithm {
     display: none;
 }
+
+.slider {
+    appearance: none;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #FDE3C6;
+    opacity: .8;
+    transition: all 400ms
+}
+
+.slider:hover {
+    opacity: 1;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, .20);
+}
+
+.slider:disabled {
+    opacity: .5;
+}
+
+.slider::-moz-range-thumb {
+    background: #130103;
+    width: 15px;
+    height: 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px; 
+    height: 15px;
+    border-radius: 999px;
+    background: #130103; 
+    cursor: pointer;
+  }
 
 @media (max-width: 684px) {
     .app-container {

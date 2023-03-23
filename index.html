@@ -14,23 +14,31 @@
             <div class="viz-container">
                 <div class="sticks-container"></div>
             </div>
-            <div class="viz-options-container">
-                <!-- bubble sort -->
-                <label for="bubble-sort" class="algorithm-button">Bubble Sort</label>
-                <input type="radio" name="algorithm" class="algorithm" id="bubble-sort" value="1" checked>
-                <!-- quick sort -->
-                <label for="quick-sort" class="algorithm-button">Quick Sort</label>
-                <input type="radio" name="algorithm" class="algorithm" id="quick-sort" value="2">
-                <!-- merge sort -->
-                <label for="merge-sort" class="algorithm-button">Merge Sort</label>
-                <input type="radio" name="algorithm" class="algorithm" id="merge-sort" value="3">
-                <!-- size and speed sliders -->
-                <input type="range" min="1" max="5" class="slider" id="size" value="3">
-                <input type="range" min="1" max="3" class="slider" id="speed" value="2">
-                <!-- shuffle button -->
-                <button type="button" id="shuffle" class="button">Shuffle</button>
-                <!-- sort button -->
-                <button type="button" id="sort" class="button">Sort</button>
+            <div class="viz-options-container">                <!-- algorith selector -->
+                <div class="option-container">
+                    <label for="bubble-sort" class="algorithm-button">Bubble Sort</label>
+                    <input type="radio" name="algorithm" class="algorithm" id="bubble-sort" value="1" checked>
+                </div>
+                <div class="option-container">
+                    <label for="quick-sort" class="algorithm-button">Quick Sort</label>
+                    <input type="radio" name="algorithm" class="algorithm" id="quick-sort" value="2">
+                </div>
+                <div class="option-container">
+                    <label for="merge-sort" class="algorithm-button">Merge Sort</label>
+                    <input type="radio" name="algorithm" class="algorithm" id="merge-sort" value="3">
+                </div>
+                <div class="option-container">
+                    <input type="range" min="1" max="5" class="slider" id="size" value="3">
+                </div>
+                <div class="option-container">
+                    <input type="range" min="1" max="3" class="slider" id="speed" value="2">
+                </div>
+                <div class="option-container">
+                    <button type="button" id="shuffle" class="button">Shuffle</button>
+                </div>
+                <div class="option-container">
+                    <button type="button" id="sort" class="button">Sort</button>
+                </div>
             </div>
         </div>
     </div>
