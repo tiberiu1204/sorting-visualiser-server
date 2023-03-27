@@ -16,16 +16,13 @@
             </div>
             <div class="viz-options-container">
                 <div class="option-container">
-                    <label for="bubble-sort" class="algorithm-button">Bubble Sort</label>
-                    <input type="radio" name="algorithm" class="algorithm" id="bubble-sort" value="1" checked>
-                </div>
-                <div class="option-container">
-                    <label for="quick-sort" class="algorithm-button">Quick Sort</label>
-                    <input type="radio" name="algorithm" class="algorithm" id="quick-sort" value="2">
-                </div>
-                <div class="option-container">
-                    <label for="merge-sort" class="algorithm-button">Merge Sort</label>
-                    <input type="radio" name="algorithm" class="algorithm" id="merge-sort" value="3">
+                    <select name="algorithm-select" id="algorithm-select" class="button">
+                        <option value="1" class="algorithm-option">Bubble Sort</option>
+                        <option value="2" class="algorithm-option">Quick Sort</option>
+                        <option value="3" class="algorithm-option">Merge Sort</option>
+                        <option value="4" class="algorithm-option">Select Sort</option>
+                        <option value="5" class="algorithm-option">Insertion Sort</option>
+                    </select>
                 </div>
                 <div class="option-container">
                     <label for="size" class="description-label">Size</label>

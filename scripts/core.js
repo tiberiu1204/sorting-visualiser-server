@@ -2,10 +2,9 @@ const sticksContainer = document.querySelector(".sticks-container");
 const sortBtn = document.querySelector("#sort");
 const shuffleBtn = document.querySelector("#shuffle");
 const stopBtn = document.querySelector("#stop");
-const algorithmInputs = document.querySelectorAll(".algorithm");
-const algorithmButtons = document.querySelectorAll(".algorithm-button");
 const sizeSlider = document.querySelector("#size");
 const speedSlider = document.querySelector("#speed");
+const algorithmSelector = document.querySelector("#algorithm-select");
 
 let selectedAlgorithm;
 let N = sizeSlider.value * 20;
@@ -18,31 +17,9 @@ setup();
 function setup() {
 
     getSpeed();
-    setOptionWidth();
+    getSelectedAlgorithm();
 
-
-    algorithmInputs.forEach(input => {
-        checkIfSelected(input);
-        input.addEventListener("click", () => {
-            algorithmInputs.forEach(element => { checkIfSelected(element); });
-        });
-    });
-
-    for(let i = 0; i < algorithmButtons.length; ++i) {
-        const btn = algorithmButtons[i];
-        btn.addEventListener("mouseover", () => {
-            if(algorithmInputs[i].checked || btn.style.opacity == "0.5") {
-                return;
-            }
-            btn.style.backgroundColor = "#550C18";
-        });
-        btn.addEventListener("mouseout", () => {
-            if(algorithmInputs[i].checked || btn.style.opacity == "0.5") {
-                return;
-            }
-            btn.style.backgroundColor = "#130103";
-        });
-    }
+    algorithmSelector.addEventListener("change", getSelectedAlgorithm);
 
     sortBtn.addEventListener("click", () => {
         beginSort(selectedAlgorithm);
@@ -64,28 +41,8 @@ function setup() {
 
     speedSlider.addEventListener("input", getSpeed);
 
-    function checkIfSelected(element) {
-        if(isSorting) return;
-        const id = element.getAttribute("id");
-        const label = document.querySelector(`.algorithm-button[for="${id}"]`);
-        if(element.checked) {
-            selectedAlgorithm = element.value;
-            label.style.color = "#130103";
-            label.style.backgroundColor = "#FDE3C6";
-        } else {
-            label.style.color = "#FDE3C6";
-            label.style.backgroundColor = "#130103";
-        }
-    }
-
-    function setOptionWidth() {
-        const vizOptionsContainer = document.querySelector(".viz-options-container");
-        const chilren = vizOptionsContainer.children;
-        let childWidth = 100 / vizOptionsContainer.childElementCount + "%";
-        
-        for(let i = 0; i < vizOptionsContainer.childElementCount; ++i) {
-            chilren[i].style.width = childWidth;
-        }
+    function getSelectedAlgorithm() {
+        selectedAlgorithm = algorithmSelector.value;
     }
 }
 
@@ -159,8 +116,7 @@ async function quickSort(left, right) {
     if(left >= right) return;
     
     const pivot = right;
-    const pivotStick = document.querySelector(`.stick:nth-child(${pivot + 1})`);
-    pivotStick.classList.add("green");
+    highlight(pivot + 1, true);
     
     let i = left, j = left;
     while(i < pivot) {
@@ -180,7 +136,7 @@ async function quickSort(left, right) {
     updateStick(j+1);
     updateStick(pivot+1);
 
-    pivotStick.classList.remove("green");
+    highlight(pivot + 1, false);
     await quickSort(left, j - 1);
     await quickSort(j + 1, right);
 }   
@@ -234,6 +190,57 @@ async function mergeSort(left, right) {
     return new Promise(resolve => {resolve(res)});
 }
 
+async function selectSort() {
+    for(let i = 0; i < arr.length; ++i) {
+        let minPosition = i;
+        highlight(i + 1, true);   
+        for(let j = i + 1; j < arr.length; ++j) {
+            activateSingle(j + 1, true);
+            await wait(speed);
+            if(arr[minPosition] > arr[j]) {
+                highlight(minPosition + 1, false);
+                highlight(j + 1, true);    
+                minPosition = j;
+            }
+            activateSingle(j + 1, false);
+        }
+        [arr[minPosition], arr[i]] = [arr[i], arr[minPosition]];
+        updateStick(minPosition + 1);
+        updateStick(i + 1);
+        highlight(minPosition + 1, false);
+    }
+}
+
+async function insertionSort() {
+    for(let i = 0; i < arr.length; ++i) {
+        highlight(i + 1, true);
+        for(let j = i; j >= 1; --j) {
+            activate(j, j+1, true);
+            await wait(speed);
+            if(arr[j] < arr[j - 1]) {
+                [arr[j-1], arr[j]] = [arr[j], arr[j-1]];
+                updateStick(j + 1);
+                updateStick(j);
+            } else {
+                activate(j, j+1, false);
+                break;
+            }
+            activate(j, j+1, false);
+        }
+        highlight(i + 1, false);
+    }
+    console.log(arr);
+}
+
+function highlight(n, isHighlighted) {
+    const stick = document.querySelector(`.stick:nth-child(${n})`);
+    if(isHighlighted) {
+        stick.classList.add("green");
+    } else {
+        stick.classList.remove("green");
+    }
+}
+
 function activate(a, b, isActive) {
     const stick1 = document.querySelector(`.stick:nth-child(${a})`);
     const stick2 = document.querySelector(`.stick:nth-child(${b})`);
@@ -260,8 +267,6 @@ function wait(ms) {
 }
 
 function beginSort(sortId) {
-
-
     disableButtons();
 
     if(isSorting) return;
@@ -275,24 +280,26 @@ function beginSort(sortId) {
     if(sortId == 3) {
         mergeSort(0, arr.length - 1).then(resolve);
     }
+    if(sortId == 4) {
+        selectSort().then(resolve);
+    }
+    if(sortId == 5) {
+        insertionSort().then(resolve);
+    }
 
     function resolve() {
         isSorting = false;
-        for(let i = 0; i < algorithmButtons.length; ++i) {
-            algorithmButtons[i].style.opacity = "1";
-        }
         sizeSlider.removeAttribute("disabled");
         shuffleBtn.removeAttribute("disabled", "");
         sortBtn.removeAttribute("disabled", "");
+        algorithmSelector.removeAttribute("disabled", "");
     }
     
     function disableButtons() {
-        for(let i = 0; i < algorithmButtons.length; ++i) {
-            algorithmButtons[i].style.opacity = ".5";
-        }
         sizeSlider.setAttribute("disabled", "");
         shuffleBtn.setAttribute("disabled", "");
         sortBtn.setAttribute("disabled", "");
+        algorithmSelector.setAttribute("disabled", "");
     }
 }
 

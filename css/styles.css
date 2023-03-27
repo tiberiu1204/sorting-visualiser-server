@@ -92,15 +92,15 @@ body {
 
 .option-container {
     height: 100%;
-    width: 300px;
-    height: 100%;
+    width: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.algorithm-button, button {
+.button {
+    text-align: center;
     height: 100%;
     width: 100%;
     background-color: #130103;
@@ -120,16 +120,17 @@ body {
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, .20);
 }
 
+select.button {
+    background-color: #130103;
+    box-shadow: none;
+}
+
 .button:disabled:hover {
     background-color: #130103;
 }
 
 .algorithm-button:hover {
     box-shadow: 0 0 10px 3px rgba(0, 0, 0, .20);
-}
-
-.algorithm {
-    display: none;
 }
 
 .slider {
@@ -177,6 +178,7 @@ body {
     .app-container {
         width: 100%;
         height: calc(100vh - var(--header-height));
+        gap: 0;
     }
     .viz-container {
         height: 100%;
