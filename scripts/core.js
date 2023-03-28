@@ -421,14 +421,20 @@ function MaxHeap() {
 }
 
 function playNote(freq) {
-    const dur = 0.1
     const osc = audioCtx.createOscillator();
-    osc.frequency.value = freq;
-    osc.start();
-    osc.stop(audioCtx.currentTime + dur);
     const node = audioCtx.createGain();
-    node.gain.value = 0.1;
-    node.gain.linearRampToValueAtTime(0, audioCtx.currentTime + dur);
+    const dur = 0.15;
+    
     osc.connect(node);
     node.connect(audioCtx.destination);
+    
+    
+    osc.frequency.value = freq;
+    node.gain.value = 0.01;
+    
+    node.gain.setValueAtTime(node.gain.value, audioCtx.currentTime);
+    node.gain.linearRampToValueAtTime(0, audioCtx.currentTime + dur);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + dur);
 }
