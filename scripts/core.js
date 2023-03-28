@@ -316,3 +316,68 @@ function getSpeed() {
             break;
     }
 }
+
+function MinHeap() {
+    this.heap = [null];
+    
+    this.getMin = () => {
+        return this.heap[1];
+    }
+
+    this.insert = num => {
+        this.heap.push(num);
+        let curPos = this.heap.length - 1;
+        let parent = Math.floor(curPos / 2);
+        while(this.heap[parent] > this.heap[curPos] && this.heap[parent] !== null) {
+            [this.heap[parent], this.heap[curPos]] = [this.heap[curPos], this.heap[parent]];
+            curPos = parent;
+            parent = Math.floor(curPos / 2);
+        } 
+    }
+
+    this.remove = () => {
+        if(this.heap.length == 1) return;
+        let smallest = this.heap[1];      
+        [this.heap[1], this.heap[this.heap.length - 1]] = [this.heap[this.heap.length - 1], this.heap[1]];
+    
+        this.heap.splice(this.heap.length - 1);
+        
+        let curPos = 1;
+        let child = curPos * 2;
+        let minPos;
+        let min;
+        while(true) {
+            if(this.heap[child] === undefined) {
+                min = undefined;
+            } else if(this.heap[child + 1] === undefined) {
+                min = this.heap[child];
+                minPos = child;
+            } else {
+                if(this.heap[child] < this.heap[child + 1]) {
+                    min = this.heap[child];
+                    minPos = child;
+                } else {
+                    min = min.heap[child + 1];
+                    minPos = child + 1;
+                }
+            }
+            if(min === undefined || min > this.heap[curPos]) {
+                break;
+            }
+            [this.heap[curPos], min] = [min, this.heap[curPos]];
+            curPos = minPos;
+            child = curPos * 2;
+        }
+        return smallest;
+    }
+}
+
+const m = new MinHeap();
+m.insert(4);
+m.insert(3);
+m.insert(5);
+m.insert(1);
+m.insert(-1);
+m.remove();
+m.remove();
+console.log(m.getMin());
