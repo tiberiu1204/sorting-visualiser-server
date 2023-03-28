@@ -5,6 +5,7 @@ const stopBtn = document.querySelector("#stop");
 const sizeSlider = document.querySelector("#size");
 const speedSlider = document.querySelector("#speed");
 const algorithmSelector = document.querySelector("#algorithm-select");
+const audioCtx = new AudioContext();
 
 let selectedAlgorithm;
 let N = sizeSlider.value * 20;
@@ -259,6 +260,8 @@ function highlight(n, isHighlighted) {
 function activate(a, b, isActive) {
     const stick1 = document.querySelector(`.stick:nth-child(${a})`);
     const stick2 = document.querySelector(`.stick:nth-child(${b})`);
+    playNote(arr[a-1] * 10);
+    playNote(arr[b-1] * 10);
     if(isActive) {
         stick1.classList.add("active");
         stick2.classList.add("active");
@@ -270,6 +273,7 @@ function activate(a, b, isActive) {
 
 function activateSingle(a, isActive) {
     const stick = document.querySelector(`.stick:nth-child(${a})`);
+    playNote(arr[a-1] * 10);
     if(isActive) {
         stick.classList.add("active");
     } else {
@@ -414,4 +418,17 @@ function MaxHeap() {
         }
         return new Promise(resolve => { resolve(biggest); });
     }
+}
+
+function playNote(freq) {
+    const dur = 0.1
+    const osc = audioCtx.createOscillator();
+    osc.frequency.value = freq;
+    osc.start();
+    osc.stop(audioCtx.currentTime + dur);
+    const node = audioCtx.createGain();
+    node.gain.value = 0.1;
+    node.gain.linearRampToValueAtTime(0, audioCtx.currentTime + dur);
+    osc.connect(node);
+    node.connect(audioCtx.destination);
 }
