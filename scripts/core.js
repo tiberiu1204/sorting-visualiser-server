@@ -194,6 +194,7 @@ async function selectSort() {
     for(let i = 0; i < arr.length; ++i) {
         let minPosition = i;
         highlight(i + 1, true);   
+        activateSingle(i + 1, true);
         for(let j = i + 1; j < arr.length; ++j) {
             activateSingle(j + 1, true);
             await wait(speed);
@@ -208,6 +209,7 @@ async function selectSort() {
         updateStick(minPosition + 1);
         updateStick(i + 1);
         highlight(minPosition + 1, false);
+        activateSingle(i + 1, false);
     }
 }
 
@@ -230,6 +232,19 @@ async function insertionSort() {
         highlight(i + 1, false);
     }
     console.log(arr);
+}
+
+async function heapSort() {
+    const heap = new MaxHeap();
+    for(let i = 0; i < arr.length; ++i) {
+        activateSingle(i + 1, true);
+        await wait(speed);
+        await heap.insert(arr[i]);
+        activateSingle(i + 1, false);
+    }
+    for(let i = arr.length - 1; i >= 0; --i) {
+        await heap.remove();
+    }
 }
 
 function highlight(n, isHighlighted) {
@@ -271,20 +286,26 @@ function beginSort(sortId) {
 
     if(isSorting) return;
     isSorting = true;
-    if(sortId == 1) {
-        bubbleSort(arr).then(resolve);
-    }
-    if(sortId == 2) {
-        quickSort(0, arr.length - 1).then(resolve);
-    }
-    if(sortId == 3) {
-        mergeSort(0, arr.length - 1).then(resolve);
-    }
-    if(sortId == 4) {
-        selectSort().then(resolve);
-    }
-    if(sortId == 5) {
-        insertionSort().then(resolve);
+    
+    switch(Number(sortId)) {
+        case 1:
+            bubbleSort(arr).then(resolve);
+            break;
+        case 2:
+            quickSort(0, arr.length - 1).then(resolve);
+            break;
+        case 3:
+            mergeSort(0, arr.length - 1).then(resolve);
+            break;
+        case 4:
+            selectSort().then(resolve);
+            break;
+        case 5:
+            insertionSort().then(resolve);
+            break;
+        case 6:
+            heapSort().then(resolve);
+            break;
     }
 
     function resolve() {
@@ -317,67 +338,80 @@ function getSpeed() {
     }
 }
 
-function MinHeap() {
+function MaxHeap() {
     this.heap = [null];
     
-    this.getMin = () => {
+    this.getMax = () => {
         return this.heap[1];
     }
 
-    this.insert = num => {
+    this.insert = async(num) => {
         this.heap.push(num);
         let curPos = this.heap.length - 1;
         let parent = Math.floor(curPos / 2);
-        while(this.heap[parent] > this.heap[curPos] && this.heap[parent] !== null) {
+        while(this.heap[parent] < this.heap[curPos] && this.heap[parent] !== null) {
             [this.heap[parent], this.heap[curPos]] = [this.heap[curPos], this.heap[parent]];
+            
+            [arr[parent - 1], arr[curPos - 1]] = [arr[curPos - 1], arr[parent - 1]];
+            activate(curPos, parent, true);
+            await wait(speed);
+            updateStick(parent);
+            updateStick(curPos);
+            activate(curPos, parent, false);
+            
             curPos = parent;
             parent = Math.floor(curPos / 2);
         } 
     }
 
-    this.remove = () => {
+    this.remove = async() => {
         if(this.heap.length == 1) return;
-        let smallest = this.heap[1];      
+        let biggest = this.heap[1];      
         [this.heap[1], this.heap[this.heap.length - 1]] = [this.heap[this.heap.length - 1], this.heap[1]];
-    
-        this.heap.splice(this.heap.length - 1);
         
+        activate(1, this.heap.length - 1, true);
+        await wait(speed);
+        [arr[0], arr[this.heap.length - 2]] = [arr[this.heap.length - 2], arr[0]];
+        updateStick(1);
+        updateStick(this.heap.length - 1);
+        activate(1, this.heap.length - 1, false);
+
+        this.heap.splice(this.heap.length - 1);
+
         let curPos = 1;
         let child = curPos * 2;
-        let minPos;
-        let min;
+        let maxPos;
+        let max;
         while(true) {
             if(this.heap[child] === undefined) {
-                min = undefined;
+                max = undefined;
             } else if(this.heap[child + 1] === undefined) {
-                min = this.heap[child];
-                minPos = child;
+                max = this.heap[child];
+                maxPos = child;
             } else {
-                if(this.heap[child] < this.heap[child + 1]) {
-                    min = this.heap[child];
-                    minPos = child;
+                if(this.heap[child] > this.heap[child + 1]) {
+                    max = this.heap[child];
+                    maxPos = child;
                 } else {
-                    min = min.heap[child + 1];
-                    minPos = child + 1;
+                    max = this.heap[child + 1];
+                    maxPos = child + 1;
                 }
             }
-            if(min === undefined || min > this.heap[curPos]) {
+            if(max === undefined || max < this.heap[curPos]) {
                 break;
             }
-            [this.heap[curPos], min] = [min, this.heap[curPos]];
-            curPos = minPos;
+            [this.heap[curPos], this.heap[maxPos]] = [this.heap[maxPos], this.heap[curPos]];
+            
+            activate(curPos, maxPos, true);
+            await wait(speed);
+            [arr[curPos - 1], arr[maxPos - 1]] = [arr[maxPos - 1], arr[curPos - 1]];
+            updateStick(curPos);
+            updateStick(maxPos);
+            activate(curPos, maxPos, false);
+
+            curPos = maxPos;
             child = curPos * 2;
         }
-        return smallest;
+        return new Promise(resolve => { resolve(biggest); });
     }
 }
-
-const m = new MinHeap();
-m.insert(4);
-m.insert(3);
-m.insert(5);
-m.insert(1);
-m.insert(-1);
-m.remove();
-m.remove();
-console.log(m.getMin());
