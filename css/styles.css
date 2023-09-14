@@ -12,9 +12,10 @@ html, body {
     font-family: sans-serif;
 }
 
-body {
-    min-height: calc(100vh - var(--header-height));
-    padding-top: var(--header-height);
+.project-title {
+    font-size: 54px;
+    text-align: center;
+    color: #130103;
 }
 
 .header-container {
@@ -27,7 +28,7 @@ body {
 }
 
 .main-container {
-    min-height: calc(100vh - var(--header-height));
+    min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -38,7 +39,7 @@ body {
 
 .app-container {
     width: 70%;
-    height: calc(100vh - var(--header-height));
+    height: 85vh;
     min-height: 460px;
     display: flex;
     flex-direction: column;
@@ -177,7 +178,7 @@ select.button {
 @media (max-width: 684px) {
     .app-container {
         width: 100%;
-        height: calc(100vh - var(--header-height));
+        height: 100vh;
         gap: 0;
     }
     .viz-container {

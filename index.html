@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sort Visualizer</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="header-container"></div>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
     <div class="main-container">
-        <div class="app-container">
-            <div class="viz-container">
-                <div class="sticks-container"></div>
-            </div>
-            <div class="viz-options-container">
-                <div class="option-container">
-                    <select name="algorithm-select" id="algorithm-select" class="button">
-                        <option value="1" class="algorithm-option">Bubble Sort</option>
-                        <option value="2" class="algorithm-option">Quick Sort</option>
-                        <option value="3" class="algorithm-option">Merge Sort</option>
-                        <option value="4" class="algorithm-option">Select Sort</option>
-                        <option value="5" class="algorithm-option">Insertion Sort</option>
-                        <option value="6" class="algorithm-option">Heap Sort</option>
-                    </select>
-                </div>
-                <div class="option-container">
-                    <label for="size" class="description-label">Size</label>
-                    <input type="range" min="1" max="5" class="slider" id="size" value="3">
-                </div>
-                <div class="option-container">
-                    <label for="speed" class="description-label">Speed</label>
-                    <input type="range" min="1" max="3" class="slider" id="speed" value="2">
-                </div>
-                <div class="option-container">
-                    <button type="button" id="shuffle" class="button">Shuffle</button>
-                </div>
-                <div class="option-container">
-                    <button type="button" id="sort" class="button">Sort</button>
-                </div>
-            </div>
+      <h1 class="project-title">Sorting Visualiser</h1>
+      <div class="app-container">
+        <div class="viz-container">
+          <div class="sticks-container"></div>
         </div>
+        <div class="viz-options-container">
+          <div class="option-container">
+            <select
+              name="algorithm-select"
+              id="algorithm-select"
+              class="button"
+            >
+              <option value="1" class="algorithm-option">Bubble Sort</option>
+              <option value="2" class="algorithm-option">Quick Sort</option>
+              <option value="3" class="algorithm-option">Merge Sort</option>
+              <option value="4" class="algorithm-option">Select Sort</option>
+              <option value="5" class="algorithm-option">Insertion Sort</option>
+              <option value="6" class="algorithm-option">Heap Sort</option>
+            </select>
+          </div>
+          <div class="option-container">
+            <label for="size" class="description-label">Size</label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              class="slider"
+              id="size"
+              value="3"
+            />
+          </div>
+          <div class="option-container">
+            <label for="speed" class="description-label">Speed</label>
+            <input
+              type="range"
+              min="1"
+              max="3"
+              class="slider"
+              id="speed"
+              value="2"
+            />
+          </div>
+          <div class="option-container">
+            <button type="button" id="shuffle" class="button">Shuffle</button>
+          </div>
+          <div class="option-container">
+            <button type="button" id="sort" class="button">Sort</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="footer-container"></div>
     <script type="module" src="scripts/core.js"></script>
-</body>
+  </body>
 </html>
