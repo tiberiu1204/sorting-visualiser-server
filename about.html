@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sort Visualizer</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <div class="header-container">
+    <h1 class="project-title">Sort Visualiser</h1>
+    <nav class="navbar">
+      <a href="index.html" class="navlink">Visualiser</a>
+      <a href="about.html" class="navlink">About</a>
+    </nav>
+  </div>
+  <div class="main-container">
+    <div class="content-container">
+      <h1 class="title">About Sort Visualiser</h1>
+      <p>
+        A sort visualiser is an interactive tool designed to demonstrate the
+        process and efficiency of various sorting algorithms. By visually
+        representing the steps each algorithm takes to sort a list of
+        elements, typically numbers or bars of varying heights, users can
+        better understand how these algorithms work. The visualisation often
+        includes animations showing comparisons, swaps, and the progression of
+        the list from unsorted to sorted order. This educational tool is
+        invaluable for students, educators, and anyone interested in computer
+        science, providing an intuitive grasp of concepts like algorithm
+        efficiency, time complexity, and data manipulation.
+      </p>
+      <p>
+        Below, you can find pseudocode for all the algorithms implemented by
+        the visualiser.
+      </p>
+      <div class="pseudocode-container">
+        <h2 class="pseudocode-title">Bubble Sort Pseudocode</h2>
+        <div class="pseudocode">
+          <span class="keyword">procedure</span> BubbleSort(<span class="keyword">var</span>
+          A : array of Integer);<br />
+          <span class="keyword">for</span> i := 0
+          <span class="keyword">to</span> length(A) - 1
+          <span class="keyword">do</span><br />
+          <span class="keyword">for</span> j := 0
+          <span class="keyword">to</span> length(A) - i - 2
+          <span class="keyword">do</span><br />
+          <span class="keyword">if</span> A[j] > A[j + 1]
+          <span class="keyword">then</span><br />
+          swap(A[j], A[j + 1]);<br />
+          <span class="keyword">end if</span><br />
+          <span class="keyword">end for</span><br />
+          <span class="keyword">end for</span><br />
+          <span class="keyword">end procedure</span><br />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
