@@ -56,6 +56,165 @@
           <span class="keyword">end procedure</span><br />
         </div>
       </div>
+      <div class="pseudocode-container">
+        <h2 class="pseudocode-title">Quicksort Pseudocode</h2>
+        <div class="pseudocode">
+          <span class="keyword">procedure</span> Quicksort(<span class="keyword">var</span>
+          A : array of Integer, low : Integer, high : Integer);<br />
+          <span class="keyword">if</span> low < high <span class="keyword">then</span><br />
+            pivotIndex := Partition(A, low, high);<br />
+            Quicksort(A, low, pivotIndex - 1);<br />
+            Quicksort(A, pivotIndex + 1, high);<br />
+            <span class="keyword">end if</span><br />
+            <span class="keyword">end procedure</span><br />
+            <br />
+            <span class="keyword">procedure</span> Partition(<span class="keyword">var</span>
+            A : array of Integer, low : Integer, high : Integer) : Integer;<br />
+            pivot := A[high];<br />
+            i := low - 1;<br />
+            <span class="keyword">for</span> j := low
+            <span class="keyword">to</span> high - 1
+            <span class="keyword">do</span><br />
+            <span class="keyword">if</span> A[j] <= pivot <span class="keyword">then</span><br />
+              i := i + 1;<br />
+              swap(A[i], A[j]);<br />
+              <span class="keyword">end if</span><br />
+              <span class="keyword">end for</span><br />
+              swap(A[i + 1], A[high]);<br />
+              <span class="keyword">return</span> i + 1;<br />
+              <span class="keyword">end procedure</span><br />
+        </div>
+      </div>
+      <div class="pseudocode-container">
+        <h2 class="pseudocode-title">Mergesort Pseudocode</h2>
+        <div class="pseudocode">
+          <span class="keyword">procedure</span> Mergesort(<span class="keyword">var</span>
+          A : array of Integer);<br />
+          <span class="keyword">if</span> length(A) > 1
+          <span class="keyword">then</span><br />
+          mid := length(A) / 2;<br />
+          leftHalf := A[0..mid];<br />
+          rightHalf := A[mid..end];<br />
+          Mergesort(leftHalf);<br />
+          Mergesort(rightHalf);<br />
+          Merge(A, leftHalf, rightHalf);<br />
+          <span class="keyword">end if</span><br />
+          <span class="keyword">end procedure</span><br />
+          <br />
+          <span class="keyword">procedure</span> Merge(<span class="keyword">var</span>
+          A : array of Integer, leftHalf : array of Integer, rightHalf : array
+          of Integer);<br />
+          i := 0;<br />
+          j := 0;<br />
+          k := 0;<br />
+          <span class="keyword">while</span> i < length(leftHalf) <span class="keyword">and</span> j < length(rightHalf)
+              <span class="keyword">do</span><br />
+              <span class="keyword">if</span> leftHalf[i] < rightHalf[j] <span class="keyword">then</span><br />
+                A[k] := leftHalf[i];<br />
+                i := i + 1;<br />
+                <span class="keyword">else</span><br />
+                A[k] := rightHalf[j];<br />
+                j := j + 1;<br />
+                <span class="keyword">end if</span><br />
+                k := k + 1;<br />
+                <span class="keyword">end while</span><br />
+                <span class="keyword">while</span> i < length(leftHalf) <span class="keyword">do</span><br />
+                  A[k] := leftHalf[i];<br />
+                  i := i + 1;<br />
+                  k := k + 1;<br />
+                  <span class="keyword">end while</span><br />
+                  <span class="keyword">while</span> j < length(rightHalf) <span class="keyword">do</span><br />
+                    A[k] := rightHalf[j];<br />
+                    j := j + 1;<br />
+                    k := k + 1;<br />
+                    <span class="keyword">end while</span><br />
+                    <span class="keyword">end procedure</span><br />
+        </div>
+      </div>
+      <div class="pseudocode-container">
+        <h2 class="pseudocode-title">Selection Sort Pseudocode</h2>
+        <div class="pseudocode">
+          <span class="keyword">procedure</span> SelectionSort(<span class="keyword">var</span>
+          A : array of Integer);<br />
+          <span class="keyword">for</span> i := 0
+          <span class="keyword">to</span> length(A) - 1
+          <span class="keyword">do</span><br />
+          minIndex := i;<br />
+          <span class="keyword">for</span> j := i + 1
+          <span class="keyword">to</span> length(A) - 1
+          <span class="keyword">do</span><br />
+          <span class="keyword">if</span> A[j] < A[minIndex] <span class="keyword">then</span><br />
+            minIndex := j;<br />
+            <span class="keyword">end if</span><br />
+            <span class="keyword">end for</span><br />
+            swap(A[i], A[minIndex]);<br />
+            <span class="keyword">end for</span><br />
+            <span class="keyword">end procedure</span><br />
+        </div>
+      </div>
+
+      <div class="pseudocode-container">
+        <h2 class="pseudocode-title">Insertion Sort Pseudocode</h2>
+        <div class="pseudocode">
+          <span class="keyword">procedure</span> InsertionSort(<span class="keyword">var</span>
+          A : array of Integer);<br />
+          <span class="keyword">for</span> i := 1
+          <span class="keyword">to</span> length(A) - 1
+          <span class="keyword">do</span><br />
+          key := A[i];<br />
+          j := i - 1;<br />
+          <span class="keyword">while</span> j >= 0
+          <span class="keyword">and</span> A[j] > key
+          <span class="keyword">do</span><br />
+          A[j + 1] := A[j];<br />
+          j := j - 1;<br />
+          <span class="keyword">end while</span><br />
+          A[j + 1] := key;<br />
+          <span class="keyword">end for</span><br />
+          <span class="keyword">end procedure</span><br />
+        </div>
+      </div>
+
+      <div class="pseudocode-container">
+        <h2 class="pseudocode-title">Heap Sort Pseudocode</h2>
+        <div class="pseudocode">
+          <span class="keyword">procedure</span> HeapSort(<span class="keyword">var</span>
+          A : array of Integer);<br />
+          n := length(A);<br />
+          <span class="keyword">for</span> i := n / 2 - 1
+          <span class="keyword">down to</span> 0
+          <span class="keyword">do</span><br />
+          Heapify(A, n, i);<br />
+          <span class="keyword">end for</span><br />
+          <span class="keyword">for</span> i := n - 1
+          <span class="keyword">down to</span> 1
+          <span class="keyword">do</span><br />
+          swap(A[0], A[i]);<br />
+          Heapify(A, i, 0);<br />
+          <span class="keyword">end for</span><br />
+          <span class="keyword">end procedure</span><br />
+          <br />
+          <span class="keyword">procedure</span> Heapify(<span class="keyword">var</span>
+          A : array of Integer, n : Integer, i : Integer);<br />
+          largest := i;<br />
+          left := 2 * i + 1;<br />
+          right := 2 * i + 2;<br />
+          <span class="keyword">if</span> left < n <span class="keyword">and</span> A[left] > A[largest]
+            <span class="keyword">then</span><br />
+            largest := left;<br />
+            <span class="keyword">end if</span><br />
+            <span class="keyword">if</span> right < n <span class="keyword">and</span> A[right] > A[largest]
+              <span class="keyword">then</span><br />
+              largest := right;<br />
+              <span class="keyword">end if</span><br />
+              <span class="keyword">if</span> largest != i
+              <span class="keyword">then</span><br />
+              swap(A[i], A[largest]);<br />
+              Heapify(A, n, largest);<br />
+              <span class="keyword">end if</span><br />
+              <span class="keyword">end procedure</span><br />
+        </div>
+      </div>
     </div>
   </div>
 </body>
