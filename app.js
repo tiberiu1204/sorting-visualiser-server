@@ -26,4 +26,8 @@ app.get("/about", (req, res) => {
   res.render("about/about");
 });
 
+app.use((req, res, next) => {
+  res.status(404).render("404");
+});
+
 app.listen(5000);
