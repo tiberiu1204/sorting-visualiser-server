@@ -306,7 +306,7 @@ label {
   gap: 0.5rem;
 }
 
-input {
+.input-field>input {
   background-color: #550c18;
   color: #fde3c6;
   border: none;
@@ -317,11 +317,12 @@ input {
   transition: all 400ms;
 }
 
-input:hover {
+.input-field>input:hover {
   box-shadow: 0px 0px 36px -19px white;
 }
 
 input.button.submit {
+  font-size: 1.4rem;
   border: 1px solid #ffd29d;
   border-radius: 1.5rem;
   padding: 0.7rem;
