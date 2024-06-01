@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 const session = require("express-session");
 app.use(
   session({
-    secret: "abcdefg",
+    secret: "OrpheanBeholderScryDoubt",
     resave: true,
     saveUninitialized: false,
   }),
@@ -23,7 +23,22 @@ app.get("/", function(req, res) {
 });
 
 app.get("/about", (req, res) => {
-  res.render("about/about");
+  res.render("about");
+});
+
+app.get("/logout", (req, res) => {
+  if (req.session.username) {
+    req.session.destroy();
+  }
+  res.redirect("/");
+});
+
+app.get("/login", function(req, res) {
+  res.render("login");
+});
+
+app.get("/register", function(req, res) {
+  res.render("register");
 });
 
 app.use((req, res, next) => {

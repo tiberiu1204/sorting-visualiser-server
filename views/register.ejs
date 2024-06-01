@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sort Visualiser</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body>
+  <div class="header-container">
+    <h1 class="project-title">Sort Visualiser</h1>
+    <nav class="navbar">
+      <a href="/" class="navlink">Visualiser</a>
+      <a href="/about" class="navlink">About</a>
+      <span class='navlink'><a href="/login" class="navlink">Login</a>/<a href="/logout"
+          class="navlink">Logout</a></span>
+    </nav>
+  </div>
+  <div class="main-container">
+    <div class="form-container">
+      <form method="post" action="login">
+        <div class="input-field">
+          <label for="username">Username</label>
+          <input type="text" name="username" value="" placeholder="john@example.com">
+        </div>
+        <div class="input-field">
+          <label for=Password>Password</label>
+          <input type="password" name="password" value="">
+        </div>
+        <span class="register">Already have an account? Click <a href="/login" class="navlink register">here</a>.</span>
+        <div class=" input-field">
+          <input type="submit" value="Register" class="button submit">
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
