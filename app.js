@@ -37,6 +37,7 @@ app.get("/about", (req, res) => {
 
 app.get("/logout", (req, res) => {
   if (req.session.username) {
+    console.log("User " + req.session.username + " logged out.");
     req.session.destroy();
   }
   res.redirect("/");
@@ -53,6 +54,7 @@ app.post("/login", function (req, res) {
     if (user) {
       req.session.username = user;
       res.status(200).json({ message: "Login successful" });
+      console.log("User " + fields.username[0] + " logged in.");
     } else {
       res.status(401).json({
         message: "Incorrect username or password",
