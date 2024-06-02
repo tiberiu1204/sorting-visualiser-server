@@ -21,14 +21,15 @@
   </div>
   <div class="main-container">
     <div class="form-container">
-      <form method="post" action="login">
+      <form method="post" action="register">
+        <legend>Register</legend>
         <div class="input-field">
           <label for="username">Username</label>
-          <input type="text" name="username" value="" placeholder="john@example.com">
+          <input type="text" name="username" value="" placeholder="John" required>
         </div>
         <div class="input-field">
           <label for=Password>Password</label>
-          <input type="password" name="password" value="">
+          <input type="password" name="password" value="" required>
         </div>
         <span class="register">Already have an account? Click <a href="/login" class="navlink register">here</a>.</span>
         <div class=" input-field">
@@ -37,6 +38,7 @@
       </form>
     </div>
   </div>
+  <script src="register.js"></script>
 </body>
 
 </html>

@@ -37,6 +37,39 @@ app.get("/login", function(req, res) {
   res.render("login");
 });
 
+app.post("/register", function(req, res) {
+  var form = new formidable.IncomingForm();
+  form.parse(req, function(err, fields, files) {
+    const data = verifyUsername(fields.username);
+    if (data) {
+      data.push({
+        username: fields.username[0],
+        password: fields.password[0],
+      });
+      fs.writeFileSync("./users/users.json", JSON.stringify(data));
+      res.status(200).json({
+        message: "Registration successful",
+      });
+    } else
+      res.status(409).json({
+        message: "Username already exists. Please choose a different username",
+      });
+  });
+});
+
+function verifyUsername(username) {
+  const data = fs.readFileSync("./users/users.json");
+  const json = JSON.parse(data);
+  if (json) {
+    for (const user of json) {
+      if (user.username == username) {
+        return false;
+      }
+    }
+  }
+  return json;
+}
+
 app.get("/register", function(req, res) {
   res.render("register");
 });
