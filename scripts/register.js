@@ -2,7 +2,7 @@ const usernameInput = document.getElementsByName("username")[0];
 const passwordInput = document.getElementsByName("password")[0];
 const submitBtn = document.querySelector(".submit");
 
-window.onload = () => {
+window.onload = function () {
   submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
 
@@ -26,7 +26,6 @@ window.onload = () => {
         } else throw new Error("Unexpected server response");
       })
       .then((data) => {
-        console.log(data);
         alert(data.message);
       })
       .catch((error) => {

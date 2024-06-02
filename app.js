@@ -10,7 +10,7 @@ if (!fs.existsSync("./users")) {
 
 const usersFilePath = "./users/users.json";
 if (!fs.existsSync(usersFilePath)) {
-  fs.writeFileSync(usersFilePath, "[]", "utf8");
+  fs.writeFileSync(usersFilePath, "{}", "utf8");
 }
 
 app.set("view engine", "ejs");
@@ -27,7 +27,7 @@ app.use(
 app.use(express.static(path.join(__dirname, "css")));
 app.use(express.static(path.join(__dirname, "scripts")));
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.render("index");
 });
 
@@ -42,19 +42,39 @@ app.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/login", function(req, res) {
+app.get("/login", function (req, res) {
   res.render("login");
 });
 
-app.post("/register", function(req, res) {
+app.post("/login", function (req, res) {
   var form = new formidable.IncomingForm();
-  form.parse(req, function(err, fields, files) {
+  form.parse(req, function (err, fields, files) {
+    const user = getUser(fields.username[0], fields.password[0]);
+    if (user) {
+      req.session.username = user;
+      res.status(200).json({ message: "Login successful" });
+    } else {
+      res.status(401).json({
+        message: "Incorrect username or password",
+      });
+    }
+  });
+});
+
+function getUser(username, password) {
+  const data = fs.readFileSync("./users/users.json");
+  const json = JSON.parse(data);
+  if (json[username] == password) {
+    return username;
+  } else return false;
+}
+
+app.post("/register", function (req, res) {
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
     const data = verifyUsername(fields.username);
     if (data) {
-      data.push({
-        username: fields.username[0],
-        password: fields.password[0],
-      });
+      data[fields.username[0]] = fields.password[0];
       fs.writeFileSync("./users/users.json", JSON.stringify(data));
       res.status(200).json({
         message: "Registration successful",
@@ -69,17 +89,13 @@ app.post("/register", function(req, res) {
 function verifyUsername(username) {
   const data = fs.readFileSync("./users/users.json");
   const json = JSON.parse(data);
-  if (json) {
-    for (const user of json) {
-      if (user.username == username) {
-        return false;
-      }
-    }
+  if (json[username] !== undefined) {
+    return false;
   }
   return json;
 }
 
-app.get("/register", function(req, res) {
+app.get("/register", function (req, res) {
   res.render("register");
 });
 
