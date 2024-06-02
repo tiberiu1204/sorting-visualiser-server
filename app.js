@@ -4,6 +4,15 @@ const formidable = require("formidable");
 const path = require("path");
 var app = express();
 
+if (!fs.existsSync("./users")) {
+  fs.mkdirSync("./users");
+}
+
+const usersFilePath = "./users/users.json";
+if (!fs.existsSync(usersFilePath)) {
+  fs.writeFileSync(usersFilePath, "[]", "utf8");
+}
+
 app.set("view engine", "ejs");
 
 const session = require("express-session");
