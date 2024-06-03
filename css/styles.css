@@ -247,7 +247,6 @@ select.button {
 .content-container {
   width: 70%;
   border-radius: 40px;
-  box-shadow: 1 1 1 1;
   box-shadow: 0px 0px 36px -19px rgba(0, 0, 0, 0.4);
   padding: 2.5rem;
   margin: 4rem 0;
@@ -307,7 +306,7 @@ label {
   gap: 0.5rem;
 }
 
-.input-field>input {
+.input-field > input {
   background-color: #550c18;
   color: #fde3c6;
   border: none;
@@ -318,7 +317,7 @@ label {
   transition: all 400ms;
 }
 
-.input-field>input:hover {
+.input-field > input:hover {
   box-shadow: 0px 0px 36px -19px white;
 }
 
